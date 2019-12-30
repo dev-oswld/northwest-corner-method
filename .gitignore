@@ -1,0 +1,30 @@
+# .gitignore file for IDEA, Eclipse, NetBeans
+# from https://gist.github.com/chhh/4961200
+# Oswld TC
+
+# Binaries
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
+*.class
+
+# NetBeans specific
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Extra
+build.xml
+manifest.mf
