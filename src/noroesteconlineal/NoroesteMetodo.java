@@ -2,6 +2,7 @@ package noroesteconlineal;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +19,11 @@ public class NoroesteMetodo {
         System.out.println("Tengo un tiempo inicial de: " + Tiempo_I);
 
         try { //Añadimos los valores
-            Scanner archivo_D = new Scanner(new File("C:\\Users\\Oswaldo\\Desktop\\NoroesteConLineal\\src\\noroesteconlineal\\demanda.txt"));
+            
+            URL url_demanda = getClass().getResource("demanda.txt");
+            File demanda_txt = new File(url_demanda.getPath());
+            
+            Scanner archivo_D = new Scanner(demanda_txt);
             List<Integer> Enteros = new ArrayList<>();
             while (archivo_D.hasNext()) {
                 if (archivo_D.hasNextInt()) {
@@ -35,8 +40,11 @@ public class NoroesteMetodo {
 
         matriz_costos = new int[oferta.length][demanda.length]; //Creamos dinamicamente el espacio
         try { //Leemos el archivo para tomar los valores
-            Scanner archivo_C = new Scanner(new File("C:\\Users\\Oswaldo\\Desktop\\NoroesteConLineal\\src\\noroesteconlineal\\costos.txt"));
-
+            
+            URL url_costos = getClass().getResource("costos.txt");
+            File costos_txt = new File(url_costos.getPath());
+            
+            Scanner archivo_C = new Scanner(costos_txt);
             for (int i = 0; i < oferta.length; i++) {
                 for (int j = 0; j < demanda.length; j++) {
                     matriz_costos[i][j] = archivo_C.nextInt();
@@ -58,8 +66,8 @@ public class NoroesteMetodo {
             System.out.println("");
         }
 
-        matriz_resultado = new int[oferta.length][demanda.length]; //
-        System.out.println(""); //Salto de Linea
+        matriz_resultado = new int[oferta.length][demanda.length];
+        System.out.println("");
         System.out.println("Matriz resultado vacia con valor cero");
         for (int i = 0; i < oferta.length; i++) {
             for (int j = 0; j < demanda.length; j++) {
@@ -75,9 +83,10 @@ public class NoroesteMetodo {
             System.out.println("");
         }
 
-        System.out.println(""); //Salto de Linea
+        System.out.println("");
         do {
             //Aqui tenemos la heuristica (ALGORITMO)
+            // Another example => https://computersolution2016.blogspot.com/2014/01/north-west-corner-method.html
             if (demanda[columna] != 0) {
                 if (demanda[columna] < oferta[fila]) {
                     matriz_resultado[fila][columna] = demanda[columna];
@@ -133,7 +142,7 @@ public class NoroesteMetodo {
             System.out.println("");
         }
 
-        System.out.println(""); //Salto de Linea
+        System.out.println("");
         for (fila = 0; fila < oferta.length; fila++) {
             for (columna = 0; columna < demanda.length; columna++) {
                 costo_final += matriz_costos[fila][columna] * matriz_resultado[fila][columna];
@@ -141,7 +150,7 @@ public class NoroesteMetodo {
         }
 
         //Aqui mostramos el resultado de los costos
-        System.out.println("Resultado final es " + costo_final + " como solucion basica");
+        System.out.println("Resultado final es " + costo_final + " como solución basica");
         Tiempo_F = System.nanoTime(); //Final de TIEMPO
         System.out.println("\nTengo un tiempo final de: " + Tiempo_F);
         Tiempo = (Tiempo_F - Tiempo_I) * 1.0e-9; //Multiplicamos por esa cantidad para hacerlo en segundos.
